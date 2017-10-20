@@ -235,21 +235,6 @@ Prefab:
       propertyPath: restartButton
       value: 
       objectReference: {fileID: 1905287702}
-    - target: {fileID: 50809092831241112, guid: 3f00e5db052344b1e8afc3869ee34c85,
-        type: 2}
-      propertyPath: m_Simulated
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114644659639732136, guid: 3f00e5db052344b1e8afc3869ee34c85,
-        type: 2}
-      propertyPath: jumpForce
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114644659639732136, guid: 3f00e5db052344b1e8afc3869ee34c85,
-        type: 2}
-      propertyPath: jumpSpeed
-      value: 0.1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3f00e5db052344b1e8afc3869ee34c85, type: 2}
   m_IsPrefabParent: 0

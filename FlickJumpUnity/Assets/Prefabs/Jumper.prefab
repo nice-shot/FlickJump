@@ -80,7 +80,7 @@ Rigidbody2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1519910841824444}
   m_BodyType: 0
-  m_Simulated: 1
+  m_Simulated: 0
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 0.0001
@@ -120,6 +120,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ascentSpeed: 0.05
   sideSpeed: 0.1
+  jumpSpeed: 0.1
+  gameOverText: {fileID: 0}
+  restartButton: {fileID: 0}
 --- !u!212 &212573655736324040
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -129,6 +132,7 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -144,6 +148,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
