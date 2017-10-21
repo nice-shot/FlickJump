@@ -38,26 +38,25 @@ public class JumperController : MonoBehaviour {
             }
 
             // Check for swipe
-            if (Input.touchCount == 1) {
-                Touch touch = Input.GetTouch(0);
-                if (touch.phase == TouchPhase.Began) {
-                    touchStart = touch.position;
-                    touchEnd = touch.position;
-                } else if (touch.phase == TouchPhase.Ended) {
-                    touchEnd = touch.position;
-                    Vector2 swipe = touchEnd - touchStart;
+            if (Input.GetMouseButtonDown(0)) {
+                touchStart = (Vector2)Input.mousePosition;
+                touchEnd = touchStart;
+            }
 
-                    // Make sure it's a drag and not a tap
-                    if (swipe.sqrMagnitude > minDragDistance) {
-                        // Stop all other forces before jump
-                        body.velocity = Vector2.zero;
+            if (Input.GetMouseButtonUp(0)) {
+                touchEnd = (Vector2)Input.mousePosition;
 
-                        Debug.Log("Jumping");
-                        // Normalizing to only look at angle and not distance
-                        Debug.Log((swipe.normalized * jumpSpeed).ToString("F4"));
-                        body.AddForce(swipe.normalized * jumpSpeed);
-                        jumping = true;
-                    }
+                Vector2 swipe = touchEnd - touchStart;
+                // Make sure it's a drag and not a tap
+                if (swipe.sqrMagnitude > minDragDistance) {
+                    // Stop all other forces before jump
+                    body.velocity = Vector2.zero;
+
+                    Debug.Log("Jumping:");
+                    // Normalizing to only look at angle and not distance
+                    Debug.Log((swipe.normalized * jumpSpeed).ToString("F4"));
+                    body.AddForce(swipe.normalized * jumpSpeed);
+                    jumping = true;
                 }
             }
         }
