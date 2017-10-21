@@ -95,4 +95,8 @@ public class JumperController : MonoBehaviour {
         Debug.Log("Current velocity:");
         Debug.Log(body.velocity.ToString("F4"));
     }
+
+    public bool IsAscending() {
+        return body.velocity.y > 0;
+    }
 }
