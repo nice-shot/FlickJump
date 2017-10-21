@@ -97,6 +97,6 @@ public class JumperController : MonoBehaviour {
     }
 
     public bool IsAscending() {
-        return body.velocity.y > 0;
+        return body.velocity.y >= 0;
     }
 }
