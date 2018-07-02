@@ -12,6 +12,7 @@ public class JumperController : MonoBehaviour {
 
     private Rigidbody2D body;
     private bool jumping = false;
+    private bool onWall = false;
     private bool facingRight = true;
     private Vector3 startingPosition;
 
@@ -52,11 +53,11 @@ public class JumperController : MonoBehaviour {
                     // Stop all other forces before jump
                     body.velocity = Vector2.zero;
 
-                    Debug.Log("Jumping:");
                     // Normalizing to only look at angle and not distance
                     Debug.Log((swipe.normalized * jumpSpeed).ToString("F4"));
                     body.AddForce(swipe.normalized * jumpSpeed);
                     jumping = true;
+                    onWall = false;
                 }
             }
         }
@@ -67,10 +68,14 @@ public class JumperController : MonoBehaviour {
             GameOver();
         }
 
-        if (other.transform.CompareTag("Wall")) {
+        if (!onWall && other.transform.CompareTag("Wall")) {
+            onWall = true;
             body.velocity = Vector2.zero;
             jumping = false;
-            facingRight = other.transform.position.x > transform.position.x;
+            // Creating an array to safely get the contact point without creating garbage
+            ContactPoint2D[] contactPoints = new ContactPoint2D[1];
+            other.GetContacts(contactPoints);
+            facingRight = contactPoints[0].point.x > transform.position.x;
         }
     }
 
