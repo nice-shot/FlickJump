@@ -4,4 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/POC_Stage_02.unity
+    guid: 1eed6d918bbe36b4bbd1d37df4eeb145
+  m_configObjects: {}
