@@ -15,6 +15,7 @@ public class JumperController : MonoBehaviour {
     private bool onWall = false;
     private bool facingRight = true;
     private Vector3 startingPosition;
+    private SpriteRenderer sprite;
 
     private Vector2 touchStart;
     private Vector2 touchEnd;
@@ -26,6 +27,7 @@ public class JumperController : MonoBehaviour {
         startingPosition = transform.position;
         // Drag distnace is 15% height of screen
         minDragDistance = Mathf.Pow((Screen.height * 15 / 100), 2);
+        sprite = GetComponentInChildren<SpriteRenderer>();
 	}
 	
 	void Update () {
@@ -76,7 +78,12 @@ public class JumperController : MonoBehaviour {
             ContactPoint2D[] contactPoints = new ContactPoint2D[1];
             other.GetContacts(contactPoints);
             facingRight = contactPoints[0].point.x > transform.position.x;
+            sprite.flipX = !facingRight;
         }
+    }
+
+    void OnCollisionExit2D(Collision2D collision) {
+        onWall = false;
     }
 
     void GameOver() {
