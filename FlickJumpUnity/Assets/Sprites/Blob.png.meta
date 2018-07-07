@@ -1,23 +1,12 @@
 fileFormatVersion: 2
-guid: d418ee95e22df4545b8fc2df919386be
+guid: b58068423ef845a46af207d41580d666
 TextureImporter:
   fileIDToRecycleName:
-    21300000: WallStart
-    21300002: WallMiddle
-    21300004: WallEnd
-    21300006: VSpike_L
-    21300008: HSpike_L
-    21300010: HSpike_C
-    21300012: HSpike_R
-    21300014: SpikeCorner
-    21300016: WallStart
-    21300018: WallMiddle
-    21300020: WallEnd
-    21300022: VSpike_L
-    21300024: HSpike_L
-    21300026: HSpike_C
-    21300028: HSpike_R
-    21300030: VSpike_R
+    21300000: Blob_0
+    21300002: Blob_1
+    21300004: Blob_2
+    21300006: Blob_3
+    21300008: Blob_4
   externalObjects: {}
   serializedVersion: 5
   mipmaps:
@@ -59,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 10
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -75,7 +64,7 @@ TextureImporter:
   - serializedVersion: 2
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
-    resizeAlgorithm: 0
+    resizeAlgorithm: 1
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -86,7 +75,18 @@ TextureImporter:
   - serializedVersion: 2
     buildTarget: Standalone
     maxTextureSize: 2048
-    resizeAlgorithm: 0
+    resizeAlgorithm: 1
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 1
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -97,7 +97,7 @@ TextureImporter:
   - serializedVersion: 2
     buildTarget: Android
     maxTextureSize: 2048
-    resizeAlgorithm: 0
+    resizeAlgorithm: 1
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -108,7 +108,7 @@ TextureImporter:
   - serializedVersion: 2
     buildTarget: WebGL
     maxTextureSize: 2048
-    resizeAlgorithm: 0
+    resizeAlgorithm: 1
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -120,161 +120,101 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WallStart
+      name: Blob_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 14
-        width: 10
-        height: 10
+        x: 0
+        y: 48
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a0cb238e26475e942b2179484793a767
+      spriteID: 1c7d82a708dc0cc42ac268ddad508276
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WallMiddle
+      name: Blob_1
       rect:
         serializedVersion: 2
-        x: 14
-        y: 14
-        width: 10
-        height: 10
+        x: 48
+        y: 48
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7828f8ceb0d3784b9773d4a518a26ce
+      spriteID: fb594d949f598e042a2026cac84d75c2
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WallEnd
+      name: Blob_2
       rect:
         serializedVersion: 2
-        x: 26
-        y: 14
-        width: 10
-        height: 10
+        x: 96
+        y: 48
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 77c0acdb9fdef954794e0a25508244f0
+      spriteID: 1f24ccaabb39a214b989bcbc8a75ccdb
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: VSpike_L
+      name: Blob_3
       rect:
         serializedVersion: 2
-        x: 38
-        y: 14
-        width: 10
-        height: 10
+        x: 0
+        y: 0
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e4a6e24175b9b747a57877a889f3c4c
+      spriteID: eab8252ae1f36a148b767059e715ac2a
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HSpike_L
+      name: Blob_4
       rect:
         serializedVersion: 2
-        x: 2
-        y: 2
-        width: 10
-        height: 10
+        x: 48
+        y: 0
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 731bc730b1e259c4bab6f196d7c244f2
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: HSpike_C
-      rect:
-        serializedVersion: 2
-        x: 14
-        y: 2
-        width: 10
-        height: 10
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 29cd292fe2b7bfa4ca016d4968182e0a
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: HSpike_R
-      rect:
-        serializedVersion: 2
-        x: 26
-        y: 2
-        width: 10
-        height: 10
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8e185e3c38a35a44d98004b4a85a0298
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SpikeCorner
-      rect:
-        serializedVersion: 2
-        x: 38
-        y: 2
-        width: 10
-        height: 10
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: af31bc1212cb1834fbd5db90d3ee7628
+      spriteID: 359d06e4013d4d84288f07cf37526fac
       vertices: []
       indices: 
       edges: []
@@ -282,7 +222,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 6cd363879eb256c4c8f622005420a445
+    spriteID: b512dec781c92164e8bcaa8b6e5ab433
     vertices: []
     indices: 
     edges: []
