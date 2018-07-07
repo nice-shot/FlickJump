@@ -155,7 +155,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.6, y: 3.85}
+  m_Size: {x: 1.6, y: 1.6}
   m_EdgeRadius: 0
 --- !u!4 &170963468
 Transform:
@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 462209292}
   m_Layer: 31
   m_Name: Spikes
-  m_TagString: Untagged
+  m_TagString: Spike
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1896,8 +1896,6 @@ GameObject:
   m_Component:
   - component: {fileID: 770250110}
   - component: {fileID: 770250109}
-  - component: {fileID: 770250108}
-  - component: {fileID: 770250107}
   m_Layer: 0
   m_Name: BG Camera
   m_TagString: Untagged
@@ -1905,20 +1903,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &770250107
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 770250106}
-  m_Enabled: 1
---- !u!124 &770250108
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 770250106}
-  m_Enabled: 1
 --- !u!20 &770250109
 Camera:
   m_ObjectHideFlags: 0
