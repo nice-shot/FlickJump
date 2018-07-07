@@ -11,6 +11,8 @@ public class JumperController : MonoBehaviour {
     public GameObject restartButton;
 
     private Rigidbody2D body;
+    private Animator animator;
+    private int animJumpState = Animator.StringToHash("IsJumping");
     private bool jumping = false;
     private bool onWall = false;
     private bool facingRight = true;
@@ -24,6 +26,7 @@ public class JumperController : MonoBehaviour {
 
 	void Awake () {
         body = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         startingPosition = transform.position;
         // Drag distnace is 15% height of screen
         minDragDistance = Mathf.Pow((Screen.height * 15 / 100), 2);
@@ -50,6 +53,7 @@ public class JumperController : MonoBehaviour {
                 touchEnd = (Vector2)Input.mousePosition;
 
                 Vector2 swipe = touchEnd - touchStart;
+                float swipeAngle = Vector2.SignedAngle(touchStart, touchEnd);
                 // Make sure it's a drag and not a tap
                 if (swipe.sqrMagnitude > minDragDistance) {
                     // Stop all other forces before jump
@@ -60,6 +64,14 @@ public class JumperController : MonoBehaviour {
                     body.AddForce(swipe.normalized * jumpSpeed);
                     jumping = true;
                     onWall = false;
+                    // Change sprite and direction
+                    animator.SetBool(animJumpState, true);
+                    // Jump animaion is facing up so we need to turn it 90 degrees
+                    if (!facingRight) {
+                        swipeAngle -= 45f;
+                    }
+                    sprite.transform.rotation = Quaternion.Euler(0f, 0f, swipeAngle);
+                    sprite.flipX = facingRight;
                 }
             }
         }
@@ -74,11 +86,13 @@ public class JumperController : MonoBehaviour {
             onWall = true;
             body.velocity = Vector2.zero;
             jumping = false;
+            animator.SetBool(animJumpState, false);
             // Creating an array to safely get the contact point without creating garbage
             ContactPoint2D[] contactPoints = new ContactPoint2D[1];
             other.GetContacts(contactPoints);
             facingRight = contactPoints[0].point.x > transform.position.x;
-            sprite.flipX = !facingRight;
+            //sprite.flipX = !facingRight;
+            sprite.transform.rotation = Quaternion.identity;
         }
     }
 
