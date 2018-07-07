@@ -34,6 +34,8 @@ public class BlobController : MonoBehaviour {
         
         // Blob should start mid air and move to wall
         body.velocity = initialVelocity;
+        float jumpAngle = Vector2.SignedAngle(Vector2.right, initialVelocity);
+        sprite.transform.rotation = Quaternion.Euler(0f, 0f, jumpAngle);
     }
 	
 	void Update () {
@@ -44,6 +46,14 @@ public class BlobController : MonoBehaviour {
         if (collision.transform.CompareTag("Wall")) {
             animator.SetTrigger(animHitWall);
             body.velocity = Vector2.zero;
+            sprite.transform.rotation = Quaternion.identity;
+            // Change sprite side
+
+            // Creating an array to safely get the contact point without creating garbage
+            ContactPoint2D[] contactPoints = new ContactPoint2D[1];
+            collision.GetContacts(contactPoints);
+            bool facingRight = contactPoints[0].point.x < transform.position.x;
+            sprite.flipX = facingRight;
         }
     }
 }
