@@ -24,7 +24,7 @@ AnimatorController:
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 0
+    m_DefaultBool: 1
     m_Controller: {fileID: 0}
   - m_Name: HitWall
     m_Type: 9
@@ -436,7 +436,7 @@ AnimatorStateMachine:
     m_Position: {x: 708, y: 384, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102249987543781708}
-    m_Position: {x: 504, y: 492, z: 0}
+    m_Position: {x: 144, y: 408, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102539919920056728}
     m_Position: {x: 516, y: 264, z: 0}
@@ -452,4 +452,4 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 50, y: 120, z: 0}
   m_ExitPosition: {x: 108, y: -48, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: 1102355868254893582}
+  m_DefaultState: {fileID: 1102249987543781708}
