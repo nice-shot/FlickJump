@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BlobController : MonoBehaviour {
 
-    public Vector2 initialVelocity;
+    public Vector2 initialDirection;
+    public float jumpSpeed;
 
     // Components
     private Rigidbody2D body;
@@ -14,11 +15,17 @@ public class BlobController : MonoBehaviour {
 
     // Animation params
     private int animPreparing = Animator.StringToHash("Preparing");
-    private int animFacingUp = Animator.StringToHash("animFacingUp");
+    private int animFacingUp = Animator.StringToHash("FacingUp");
     private int animJump = Animator.StringToHash("Jump");
     private int animHitWall = Animator.StringToHash("HitWall");
 
+    // Visual varriables
+    private bool facingRight;
+    private bool facingUp;
+    
+    
     // Drag variables
+    private bool onWall = false;
     private Vector2 touchStart;
     private Vector2 touchEnd;
     private float minDragDistance;
@@ -33,13 +40,38 @@ public class BlobController : MonoBehaviour {
         minDragDistance = Mathf.Pow((Screen.height * 15 / 100), 2);
         
         // Blob should start mid air and move to wall
-        body.velocity = initialVelocity;
-        float jumpAngle = Vector2.SignedAngle(Vector2.right, initialVelocity);
+        body.velocity = initialDirection.normalized * jumpSpeed;
+        float jumpAngle = Vector2.SignedAngle(Vector2.right, initialDirection);
         sprite.transform.rotation = Quaternion.Euler(0f, 0f, jumpAngle);
     }
 	
 	void Update () {
-		
+		if (Input.GetMouseButtonDown(0)) {
+            touchStart = (Vector2)Input.mousePosition;
+            touchEnd = touchStart;
+            animator.ResetTrigger(animJump);
+            animator.SetBool(animPreparing, true);
+        }
+
+        if (Input.GetMouseButtonUp(0)) {
+            animator.SetBool(animPreparing, false);
+            touchEnd = (Vector2)Input.mousePosition;
+            Vector2 swipe = touchEnd - touchStart;
+            facingUp = touchStart.y < touchEnd.y;
+            animator.SetBool(animFacingUp, facingUp);
+
+            if (onWall && swipe.sqrMagnitude > minDragDistance) {
+                // Jump
+                body.velocity = swipe.normalized * jumpSpeed;
+
+                onWall = false;
+                animator.SetTrigger(animJump);
+                // Change sprite direction
+                Vector2 compareAngle = facingRight ? Vector2.right : Vector2.left;
+                float jumpAngle = Vector2.SignedAngle(compareAngle, swipe);
+                sprite.transform.rotation = Quaternion.Euler(0f, 0f, jumpAngle);
+            }
+        }
 	}
 
     private void OnCollisionEnter2D(Collision2D collision) {
@@ -47,13 +79,16 @@ public class BlobController : MonoBehaviour {
             animator.SetTrigger(animHitWall);
             body.velocity = Vector2.zero;
             sprite.transform.rotation = Quaternion.identity;
-            // Change sprite side
 
             // Creating an array to safely get the contact point without creating garbage
             ContactPoint2D[] contactPoints = new ContactPoint2D[1];
             collision.GetContacts(contactPoints);
-            bool facingRight = contactPoints[0].point.x < transform.position.x;
+
+            // Change sprite direction
+            facingRight = contactPoints[0].point.x < transform.position.x;
             sprite.flipX = facingRight;
+
+            onWall = true;
         }
     }
 }
