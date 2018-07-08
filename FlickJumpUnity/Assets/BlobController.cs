@@ -9,6 +9,8 @@ public class BlobController : MonoBehaviour {
 
     private bool isDead = false;
     private const float SCREEN_WIDTH = 22;
+    private const float JUMP_MIN_ANGLE = 5f;
+    private const float JUMP_MAX_ANGLE = 175f;
 
     // Components
     private Rigidbody2D body;
@@ -24,10 +26,10 @@ public class BlobController : MonoBehaviour {
     private int animDead = Animator.StringToHash("Dead");
 
     // Visual varriables
-    private bool facingRight;
     private bool facingUp;
     
     // Drag variables
+    private bool facingRight;
     private bool onWall = false;
     private Vector2 touchStart;
     private Vector2 touchEnd;
@@ -67,21 +69,41 @@ public class BlobController : MonoBehaviour {
             touchEnd = (Vector2)Input.mousePosition;
             Vector2 swipe = touchEnd - touchStart;
             facingUp = touchStart.y < touchEnd.y;
+            // We change looking direction even if there was no jump
             animator.SetBool(animFacingUp, facingUp);
 
-            if (onWall && swipe.sqrMagnitude > minDragDistance) {
-                // Jump
-                body.velocity = swipe.normalized * jumpSpeed;
-
-                onWall = false;
-                animator.SetTrigger(animJump);
-                // Change sprite direction
-                Vector2 compareAngle = facingRight ? Vector2.right : Vector2.left;
-                float jumpAngle = Vector2.SignedAngle(compareAngle, swipe);
-                sprite.transform.rotation = Quaternion.Euler(0f, 0f, jumpAngle);
-            }
+            Jump(swipe);
         }
 	}
+
+    private void Jump(Vector2 jumpVector) {
+        // Can't jump in mid-air
+        if (!onWall) {
+            return;
+        }
+
+        // Prevent jumping towards the wall we're on
+        bool angleOk;
+        float testAngle = Vector2.SignedAngle(Vector2.up, jumpVector);
+        if (facingRight) {
+            angleOk = testAngle < -JUMP_MIN_ANGLE && testAngle > -JUMP_MAX_ANGLE;
+        } else {
+            angleOk = testAngle > JUMP_MIN_ANGLE && testAngle < JUMP_MAX_ANGLE;
+        }
+
+        if (angleOk && jumpVector.sqrMagnitude > minDragDistance) {
+            // Jump
+            body.velocity = jumpVector.normalized * jumpSpeed;
+
+            onWall = false;
+            animator.SetTrigger(animJump);
+
+            // Change sprite direction
+            Vector2 compareAngle = facingRight ? Vector2.right : Vector2.left;
+            float jumpAngle = Vector2.SignedAngle(compareAngle, jumpVector);
+            sprite.transform.rotation = Quaternion.Euler(0f, 0f, jumpAngle);
+        }
+    }
 
     private void OnCollisionEnter2D(Collision2D collision) {
         // Creating an array to safely get the contact point without creating garbage
