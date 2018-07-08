@@ -18,6 +18,7 @@ public class BlobController : MonoBehaviour {
     private Rigidbody2D body;
     private Animator animator;
     private SpriteRenderer sprite;
+    private BoxCollider2D boxCollider;
     private Vector3 startingPosition;
 
     // Animation params
@@ -37,7 +38,9 @@ public class BlobController : MonoBehaviour {
     void Awake() {
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        boxCollider = GetComponent<BoxCollider2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
+
 
         startingPosition = transform.position;
         // Drag distnace is 15% height of screen
@@ -123,7 +126,11 @@ public class BlobController : MonoBehaviour {
         // Creating an array to safely get the contact point without creating garbage
         ContactPoint2D[] contactPoints = new ContactPoint2D[1];
         collision.GetContacts(contactPoints);
+        Debug.Log("Contact point: " + contactPoints[0].point);
+        Debug.Log("Transform point: " + transform.position);
         isFacingRight = contactPoints[0].point.x < transform.position.x;
+        Debug.Log("Is facing right: " + isFacingRight);
+        Vector2 currentVelocity = body.velocity;
 
         if (collision.transform.CompareTag("Wall")) {
             animator.SetTrigger(animHitWall);
@@ -134,6 +141,43 @@ public class BlobController : MonoBehaviour {
             sprite.flipX = isFacingRight;
 
             onWall = true;
+            Vector2 center = boxCollider.bounds.center;
+            Vector2 size = boxCollider.size;
+
+            // Check if collision is on top or bottom
+            Vector2 contactPoint = contactPoints[0].point;
+            bool insideColliderWidth = contactPoint.x < center.x + (size.x / 2f)
+                && contactPoint.x > center.x - (size.x / 2f);
+
+            // Collision was on one of the sides
+            if (!insideColliderWidth) {
+                return;
+            }
+
+            // We collided with top or bottom!
+
+            Vector2 newPosition = body.position;
+            if (isFacingRight) {
+                Debug.Log("Hit Right!");
+                //newPosition.x = Mathf.Round(newPosition.x) + 0.2f;
+                newPosition.x = Mathf.Round(newPosition.x);
+
+            } else {
+                Debug.Log("Hit Left!");
+                //newPosition.x = Mathf.Round(newPosition.x) - 0.2f;
+                newPosition.x = Mathf.Round(newPosition.x);
+            }
+
+            if (center.y + (size.y / 2f) <= contactPoint.y) {
+                Debug.Log("Hit Top!");
+                newPosition.y = newPosition.y + 2f;
+            } else if (center.y - (size.y / 2f) >= contactPoint.y) {
+                Debug.Log("Hit bottom!");
+                newPosition.y = newPosition.y - 2f;
+            }
+            body.position = newPosition;
+            Debug.Log("New position: " + newPosition);
+
         }
 
         if (collision.transform.CompareTag("Spike")) {
