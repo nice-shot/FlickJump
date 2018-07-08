@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
-    public JumperController jumper;
+    public BlobController blob;
     [Tooltip("Maximum allowed distance between jumper and camera center")]
     public float distanceFromCam;
     public float moveSpeed;
@@ -19,10 +19,10 @@ public class CameraController : MonoBehaviour {
 	}
 	
 	void Update () {
-        float jumperY = jumper.transform.position.y;
+        float jumperY = blob.transform.position.y;
         float desiredCameraY;
 
-        if (jumper.IsAscending()) {
+        if (blob.IsAscending()) {
             desiredCameraY = jumperY + distanceFromCam;
         } else {
             // Prevent too big movements when jumping down

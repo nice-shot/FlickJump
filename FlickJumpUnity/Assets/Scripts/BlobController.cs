@@ -9,6 +9,7 @@ public class BlobController : MonoBehaviour {
     public GameObject gameOverScreen;
 
     private bool isDead = false;
+    private bool isFacingUp;
     private const float SCREEN_WIDTH = 22;
     private const float JUMP_MIN_ANGLE = 5f;
     private const float JUMP_MAX_ANGLE = 175f;
@@ -25,12 +26,9 @@ public class BlobController : MonoBehaviour {
     private int animJump = Animator.StringToHash("Jump");
     private int animHitWall = Animator.StringToHash("HitWall");
     private int animDead = Animator.StringToHash("Dead");
-
-    // Visual varriables
-    private bool facingUp;
     
     // Drag variables
-    private bool facingRight;
+    private bool isFacingRight;
     private bool onWall = false;
     private Vector2 touchStart;
     private Vector2 touchEnd;
@@ -54,11 +52,11 @@ public class BlobController : MonoBehaviour {
         transform.position = startingPosition;
         body.simulated = true;
         animator.SetBool(animDead, false);
-        facingUp = true;
-        facingRight = true;
+        isFacingUp = true;
+        isFacingRight = true;
 
-        sprite.flipX = facingRight;
-        animator.SetBool(animFacingUp, facingUp);
+        sprite.flipX = isFacingRight;
+        animator.SetBool(animFacingUp, isFacingUp);
 
         // Blob should start mid air and move to wall
         body.velocity = initialDirection.normalized * jumpSpeed;
@@ -84,9 +82,9 @@ public class BlobController : MonoBehaviour {
             animator.SetBool(animPreparing, false);
             touchEnd = (Vector2)Input.mousePosition;
             Vector2 swipe = touchEnd - touchStart;
-            facingUp = touchStart.y < touchEnd.y;
+            isFacingUp = touchStart.y < touchEnd.y;
             // We change looking direction even if there was no jump
-            animator.SetBool(animFacingUp, facingUp);
+            animator.SetBool(animFacingUp, isFacingUp);
 
             Jump(swipe);
         }
@@ -101,7 +99,7 @@ public class BlobController : MonoBehaviour {
         // Prevent jumping towards the wall we're on
         bool angleOk;
         float testAngle = Vector2.SignedAngle(Vector2.up, jumpVector);
-        if (facingRight) {
+        if (isFacingRight) {
             angleOk = testAngle < -JUMP_MIN_ANGLE && testAngle > -JUMP_MAX_ANGLE;
         } else {
             angleOk = testAngle > JUMP_MIN_ANGLE && testAngle < JUMP_MAX_ANGLE;
@@ -115,7 +113,7 @@ public class BlobController : MonoBehaviour {
             animator.SetTrigger(animJump);
 
             // Change sprite direction
-            Vector2 compareAngle = facingRight ? Vector2.right : Vector2.left;
+            Vector2 compareAngle = isFacingRight ? Vector2.right : Vector2.left;
             float jumpAngle = Vector2.SignedAngle(compareAngle, jumpVector);
             sprite.transform.rotation = Quaternion.Euler(0f, 0f, jumpAngle);
         }
@@ -125,7 +123,7 @@ public class BlobController : MonoBehaviour {
         // Creating an array to safely get the contact point without creating garbage
         ContactPoint2D[] contactPoints = new ContactPoint2D[1];
         collision.GetContacts(contactPoints);
-        facingRight = contactPoints[0].point.x < transform.position.x;
+        isFacingRight = contactPoints[0].point.x < transform.position.x;
 
         if (collision.transform.CompareTag("Wall")) {
             animator.SetTrigger(animHitWall);
@@ -133,7 +131,7 @@ public class BlobController : MonoBehaviour {
             sprite.transform.rotation = Quaternion.identity;
 
             // Change sprite direction
-            sprite.flipX = facingRight;
+            sprite.flipX = isFacingRight;
 
             onWall = true;
         }
@@ -167,5 +165,9 @@ public class BlobController : MonoBehaviour {
             sprite.transform.rotation = Quaternion.Euler(0f, 0f, -90f);
             sprite.flipX = false;
         }
+    }
+
+    public bool IsAscending() {
+        return isFacingUp;
     }
 }
