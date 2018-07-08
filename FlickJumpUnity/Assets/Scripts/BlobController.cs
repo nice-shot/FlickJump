@@ -124,7 +124,7 @@ public class BlobController : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision) {
         // Creating an array to safely get the contact point without creating garbage
-        ContactPoint2D[] contactPoints = new ContactPoint2D[1];
+        ContactPoint2D[] contactPoints = new ContactPoint2D[2];
         collision.GetContacts(contactPoints);
         Debug.Log("Contact point: " + contactPoints[0].point);
         Debug.Log("Transform point: " + transform.position);
@@ -145,27 +145,31 @@ public class BlobController : MonoBehaviour {
             Vector2 size = boxCollider.size;
 
             // Check if collision is on top or bottom
-            Vector2 contactPoint = contactPoints[0].point;
-            bool insideColliderWidth = contactPoint.x < center.x + (size.x / 2f)
-                && contactPoint.x > center.x - (size.x / 2f);
+            bool insideColliderWidth = false;
 
+            foreach (ContactPoint2D point in contactPoints) {
+                Vector2 contactVector = point.point;
+                if (contactVector.x < center.x + (size.x / 2f)
+                    && contactVector.x > center.x - (size.x / 2f)) {
+                    insideColliderWidth = true;
+                }
+            }
+            
             // Collision was on one of the sides
             if (!insideColliderWidth) {
                 return;
             }
 
             // We collided with top or bottom!
-
+            Vector2 contactPoint = contactPoints[0].point;
             Vector2 newPosition = body.position;
             if (isFacingRight) {
                 Debug.Log("Hit Right!");
-                //newPosition.x = Mathf.Round(newPosition.x) + 0.2f;
-                newPosition.x = Mathf.Round(newPosition.x);
+                newPosition.x = Mathf.Round(newPosition.x) + 0.2f;
 
             } else {
                 Debug.Log("Hit Left!");
-                //newPosition.x = Mathf.Round(newPosition.x) - 0.2f;
-                newPosition.x = Mathf.Round(newPosition.x);
+                newPosition.x = Mathf.Round(newPosition.x) - 0.2f;
             }
 
             if (center.y + (size.y / 2f) <= contactPoint.y) {
