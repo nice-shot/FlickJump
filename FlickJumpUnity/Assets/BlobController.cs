@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class BlobController : MonoBehaviour {
 
-    public Vector2 initialDirection;
     public float jumpSpeed;
+    public Vector2 initialDirection;
+    public GameObject gameOverScreen;
 
     private bool isDead = false;
     private const float SCREEN_WIDTH = 22;
@@ -43,14 +44,29 @@ public class BlobController : MonoBehaviour {
         startingPosition = transform.position;
         // Drag distnace is 15% height of screen
         minDragDistance = Mathf.Pow((Screen.height * 15 / 100), 2);
-        
+
+        Restart();
+    }
+
+    public void Restart() {
+        isDead = false;
+        gameOverScreen.SetActive(false);
+        transform.position = startingPosition;
+        body.simulated = true;
+        animator.SetBool(animDead, false);
+        facingUp = true;
+        facingRight = true;
+
+        sprite.flipX = facingRight;
+        animator.SetBool(animFacingUp, facingUp);
+
         // Blob should start mid air and move to wall
         body.velocity = initialDirection.normalized * jumpSpeed;
         float jumpAngle = Vector2.SignedAngle(Vector2.right, initialDirection);
         sprite.transform.rotation = Quaternion.Euler(0f, 0f, jumpAngle);
     }
-	
-	void Update () {
+
+    void Update () {
         if (isDead) {
             return;
         }
@@ -123,28 +139,33 @@ public class BlobController : MonoBehaviour {
         }
 
         if (collision.transform.CompareTag("Spike")) {
-            isDead = true;
-            animator.SetBool(animDead, true);
-            body.velocity = Vector2.zero;
-            body.simulated = false;
-            sprite.transform.rotation = Quaternion.identity;
+            Die(contactPoints[0]);
+        }
+    }
 
-            if (body.position.x > (SCREEN_WIDTH / 2f)) {
-                // Dead right
-                sprite.flipX = false;
-            } else if (body.position.x < -(SCREEN_WIDTH / 2f)) {
-                // Dead left
-                sprite.flipX = true;
-            } else if (body.position.y < contactPoints[0].point.y) {
-                // Dead up
-                sprite.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
-                sprite.flipX = false;
-            } else {
-                // Dead down
-                sprite.transform.rotation = Quaternion.Euler(0f, 0f, -90f);
-                sprite.flipX = false;
-            }
+    private void Die(ContactPoint2D contactPoint) {
+        isDead = true;
+        gameOverScreen.SetActive(true);
+        animator.SetBool(animDead, true);
+        body.velocity = Vector2.zero;
+        body.simulated = false;
 
+        // Make dead animation face the right way
+        sprite.transform.rotation = Quaternion.identity;
+        if (body.position.x > (SCREEN_WIDTH / 2f)) {
+            // Dead right
+            sprite.flipX = false;
+        } else if (body.position.x < -(SCREEN_WIDTH / 2f)) {
+            // Dead left
+            sprite.flipX = true;
+        } else if (body.position.y < contactPoint.point.y) {
+            // Dead up
+            sprite.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+            sprite.flipX = false;
+        } else {
+            // Dead down
+            sprite.transform.rotation = Quaternion.Euler(0f, 0f, -90f);
+            sprite.flipX = false;
         }
     }
 }
