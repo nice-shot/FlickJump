@@ -18,6 +18,10 @@ TextureImporter:
     21300026: HSpike_C
     21300028: HSpike_R
     21300030: VSpike_R
+    21300032: HorizontalWallEdge
+    21300034: HorizontalWall
+    21300036: HorizontalWallEdge_L
+    21300038: HorizontalWallEdge_R
   externalObjects: {}
   serializedVersion: 5
   mipmaps:
@@ -275,6 +279,66 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: af31bc1212cb1834fbd5db90d3ee7628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HorizontalWallEdge_L
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 14
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b4d14c146019544181ea2aebc1ddf63
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HorizontalWall
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 2
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f1589f477f78f341bbda8fedfba2afa
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HorizontalWallEdge_R
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 14
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85a72bfd5d3b6dc48b0911d8a23439de
       vertices: []
       indices: 
       edges: []
