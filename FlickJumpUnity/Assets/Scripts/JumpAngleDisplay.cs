@@ -12,19 +12,35 @@ public class JumpAngleDisplay : MonoBehaviour {
     private float minDragDistance;
     private Vector2 touchStart;
     private Direction facingDirection;
-	
-	void Update () {
+    private SpriteRenderer arrowSprite;
+
+    void Awake() {
+        arrowSprite = arrowPivot.GetComponentInChildren<SpriteRenderer>();
+    }
+
+    void Update () {
         if (isHidden) {
             return;
         }
 		
         if (Input.GetMouseButton(0)) {
             Vector2 swipe = (Vector2)Input.mousePosition - touchStart;
+
+            // Change arrow rotation
             float angle = Vector2.SignedAngle(Vector2.up, swipe);
             arrowPivot.transform.rotation = Quaternion.Euler(0f, 0f, angle);
 
+            // Change arrow size based on swipe magnitude
             float ySize = Mathf.Min(swipe.sqrMagnitude / minDragDistance, 1f);
             arrowPivot.transform.localScale = new Vector3(1f, ySize);
+
+            // Change arrow color if angle is illegal
+            if (!NewBlobController.CheckJumpAngle(facingDirection, swipe,
+                                                 angleLimit)) {
+                arrowSprite.color = Color.red;
+            } else {
+                arrowSprite.color = Color.white;
+            }
         }
 	}
 

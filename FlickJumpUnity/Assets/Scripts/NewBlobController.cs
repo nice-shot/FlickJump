@@ -136,25 +136,8 @@ public class NewBlobController : MonoBehaviour {
             return;
         }
 
-        Vector2 compareAngle;
-
-        switch (currentDirection) {
-            case Direction.LEFT:
-                compareAngle = Vector2.left;
-                break;
-            case Direction.RIGHT:
-                compareAngle = Vector2.right;
-                break;
-            case Direction.UP:
-                compareAngle = Vector2.up;
-                break;
-            default:
-                compareAngle = Vector2.down;
-                break;
-        }
-
         // Drag is towards the wall we're stuck on
-        if (Vector2.Angle(compareAngle, jumpVector) > (90f - jumpAngleLimit)) {
+        if (!CheckJumpAngle(currentDirection, jumpVector, jumpAngleLimit)) {
             Debug.Log("Trying to jump to wall we're on");
             return;   
         }
@@ -212,5 +195,28 @@ public class NewBlobController : MonoBehaviour {
             angleDisplay.Show(touchStart, currentDirection,
                               jumpAngleLimit, minDragDistance); 
         }
+    }
+
+    // Static method since jump angle display needs this logic as well.
+    public static bool CheckJumpAngle(Direction direction, Vector2 jumpVector,
+                                      float jumpAngleLimit) {
+        Vector2 compareAngle;
+
+        switch (direction) {
+            case Direction.LEFT:
+                compareAngle = Vector2.left;
+                break;
+            case Direction.RIGHT:
+                compareAngle = Vector2.right;
+                break;
+            case Direction.UP:
+                compareAngle = Vector2.up;
+                break;
+            default:
+                compareAngle = Vector2.down;
+                break;
+        }
+
+        return Vector2.Angle(compareAngle, jumpVector) < (90f - jumpAngleLimit);
     }
 }
