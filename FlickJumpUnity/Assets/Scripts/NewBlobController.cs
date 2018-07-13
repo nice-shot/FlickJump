@@ -8,6 +8,7 @@ public class NewBlobController : MonoBehaviour {
     public Vector2 initialVelocity;
     public BlobState initialState;
     public Direction initialDirection;
+    public GameObject gameOverScreen;
 
     // States
     private Vector3 startingPosition;
@@ -43,7 +44,8 @@ public class NewBlobController : MonoBehaviour {
         Restart();
     }
 
-    private void Restart() {
+    public void Restart() {
+        gameOverScreen.SetActive(false);
         body.position = startingPosition;
         body.velocity = initialVelocity.normalized * jumpSpeed;
         currentState = initialState;
@@ -196,6 +198,7 @@ public class NewBlobController : MonoBehaviour {
         if (collision.transform.CompareTag("Spike")) {
             currentState = BlobState.DEAD;
             animator.SetTrigger(animDied);
+            gameOverScreen.SetActive(true);
         }
 
         if (collision.transform.CompareTag("Wall")) {
