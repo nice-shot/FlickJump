@@ -5,13 +5,11 @@ public class NewBlobController : MonoBehaviour {
     // Public parameters
     public float jumpSpeed;
     public float jumpAngleLimit;
-    public float firstJumpAngleLimit;
     public Vector2 initialVelocity;
     public BlobState initialState;
     public Direction initialDirection;
 
     // States
-    private bool firstJump;
     private Vector3 startingPosition;
     private Direction currentDirection;
     private BlobState currentState;
@@ -50,7 +48,6 @@ public class NewBlobController : MonoBehaviour {
         body.velocity = initialVelocity.normalized * jumpSpeed;
         currentState = initialState;
         currentDirection = initialDirection;
-        firstJump = true;
 
         // Allows starting with jump or with sticking to wall
         if (currentState == BlobState.JUMPING) {
@@ -115,11 +112,96 @@ public class NewBlobController : MonoBehaviour {
 
         if (Input.GetMouseButtonUp(0)) {
             animator.SetBool(animPreparing, false);
+            touchEnd = (Vector2)Input.mousePosition;
+            Vector2 swipe = touchEnd - touchStart;
+            Jump(swipe);
         }
+    }
+
+    private void Jump(Vector2 jumpVector) {
+        // Can't jump in mid air
+        if (currentState != BlobState.ON_WALL) {
+            Debug.Log("Not on wall - can't jump");
+            return;
+        }
+
+        // Didn't drag enough to register swipe
+        if (jumpVector.sqrMagnitude < minDragDistance) {
+            Debug.Log("Not enough drag to jump");
+            return;
+        }
+
+        Vector2 compareAngle;
+
+        switch (currentDirection) {
+            case Direction.LEFT:
+                compareAngle = Vector2.left;
+                break;
+            case Direction.RIGHT:
+                compareAngle = Vector2.right;
+                break;
+            case Direction.UP:
+                compareAngle = Vector2.up;
+                break;
+            default:
+                compareAngle = Vector2.down;
+                break;
+        }
+
+        // Drag is towards the wall we're stuck on
+        if (Vector2.Angle(compareAngle, jumpVector) > (90f - jumpAngleLimit)) {
+            Debug.Log("Trying to jump to wall we're on");
+            return;   
+        }
+
+        // Jumping:
+        body.velocity = jumpVector.normalized * jumpSpeed;
+        currentState = BlobState.JUMPING;
+        animator.SetBool(animJumping, true);
+        ChangeSpriteDirection();
+        angleDisplay.Hide();
     }
 
     // Called via the animation so it'll only displayed when on the wall
     public void ShowAngleDisplay() {
         angleDisplay.Show(touchStart, currentDirection, jumpAngleLimit); 
+    }
+
+    void OnCollisionEnter2D(Collision2D collision) {
+        // Stop movement and jumping animation
+        body.velocity = Vector2.zero;
+        animator.SetBool(animJumping, false);
+
+        // Check collision direction
+        ContactPoint2D[] contactPoints = new ContactPoint2D[2];
+        collision.GetContacts(contactPoints);
+        Vector2 firstContact = contactPoints[0].point;
+        Vector2 secondContact = contactPoints[1].point;
+
+        // We've hit a vertical wall
+        if (Mathf.Approximately(firstContact.x, secondContact.x)) {
+            if (firstContact.x > transform.position.x) {
+                currentDirection = Direction.LEFT;
+            } else {
+                currentDirection = Direction.RIGHT;
+            }
+        } else { // We've probably hit a horizontal wall
+            if (firstContact.y > transform.position.y) {
+                currentDirection = Direction.DOWN;
+            } else  {
+                currentDirection = Direction.UP;
+            }
+        }
+
+        if (collision.transform.CompareTag("Spike")) {
+            currentState = BlobState.DEAD;
+            animator.SetTrigger(animDied);
+        }
+
+        if (collision.transform.CompareTag("Wall")) {
+            currentState = BlobState.ON_WALL;
+        }
+
+        ChangeSpriteDirection();
     }
 }
