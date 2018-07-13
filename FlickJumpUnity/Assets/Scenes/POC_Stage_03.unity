@@ -233,12 +233,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 592b5c31d41244050a4122f0c73860d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpSpeed: 25
+  jumpSpeed: 8
   jumpAngleLimit: 0
   firstJumpAngleLimit: 0
   initialVelocity: {x: 0, y: 0}
   initialState: 0
-  initialDirection: 3
+  initialDirection: 1
 --- !u!114 &1084170888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,11 +301,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4991985874137444, guid: 2baa3eb14c6a7ae498089a34961846ad, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 9.6
+      value: 9.14
       objectReference: {fileID: 0}
     - target: {fileID: 4991985874137444, guid: 2baa3eb14c6a7ae498089a34961846ad, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.6
+      value: 2.56
       objectReference: {fileID: 0}
     - target: {fileID: 4991985874137444, guid: 2baa3eb14c6a7ae498089a34961846ad, type: 2}
       propertyPath: m_LocalPosition.z
@@ -351,6 +351,37 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 77cd0ef59075448769c426e276da27d3, type: 2}
+    - target: {fileID: 212853250553028570, guid: 2baa3eb14c6a7ae498089a34961846ad,
+        type: 2}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4320532603801274, guid: 2baa3eb14c6a7ae498089a34961846ad, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4320532603801274, guid: 2baa3eb14c6a7ae498089a34961846ad, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4320532603801274, guid: 2baa3eb14c6a7ae498089a34961846ad, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4320532603801274, guid: 2baa3eb14c6a7ae498089a34961846ad, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 212853250553028570, guid: 2baa3eb14c6a7ae498089a34961846ad,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300006, guid: b58068423ef845a46af207d41580d666,
+        type: 3}
+    - target: {fileID: 4320532603801274, guid: 2baa3eb14c6a7ae498089a34961846ad, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114673998128205110, guid: 2baa3eb14c6a7ae498089a34961846ad, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 2baa3eb14c6a7ae498089a34961846ad, type: 2}
