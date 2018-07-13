@@ -5,6 +5,7 @@ public class NewBlobController : MonoBehaviour {
     // Public parameters
     public float jumpSpeed;
     public float jumpAngleLimit;
+    public bool useAngleDisplay;
     public Vector2 initialVelocity;
     public BlobState initialState;
     public Direction initialDirection;
@@ -111,7 +112,6 @@ public class NewBlobController : MonoBehaviour {
             touchEnd = touchStart;
             // Set animation preparing
             animator.SetBool(animPreparing, true);
-            angleDisplay.Show(touchStart, currentDirection, jumpAngleLimit);
         }
 
         if (Input.GetMouseButtonUp(0)) {
@@ -208,8 +208,9 @@ public class NewBlobController : MonoBehaviour {
 
     // Called via the animation so it'll only displayed when preparing
     public void ShowAngleDisplay() {
-        if (angleDisplay.IsHidden()) {
-            angleDisplay.Show(touchStart, currentDirection, jumpAngleLimit); 
+        if (useAngleDisplay && angleDisplay.IsHidden()) {
+            angleDisplay.Show(touchStart, currentDirection,
+                              jumpAngleLimit, minDragDistance); 
         }
     }
 }

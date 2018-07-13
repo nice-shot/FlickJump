@@ -8,6 +8,8 @@ public class JumpAngleDisplay : MonoBehaviour {
     public GameObject arrowPivot;
 
     private bool isHidden;
+    private float angleLimit;
+    private float minDragDistance;
     private Vector2 touchStart;
     private Direction facingDirection;
 	
@@ -20,15 +22,22 @@ public class JumpAngleDisplay : MonoBehaviour {
             Vector2 swipe = (Vector2)Input.mousePosition - touchStart;
             float angle = Vector2.SignedAngle(Vector2.up, swipe);
             arrowPivot.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+
+            float ySize = Mathf.Min(swipe.sqrMagnitude / minDragDistance, 1f);
+            arrowPivot.transform.localScale = new Vector3(1f, ySize);
         }
 	}
 
     public void Show(Vector2 touchStart, Direction facingDirection,
-                     float angleLimit, bool useShortGraphic=false) {
+                     float angleLimit, float minDragDistance) {
         isHidden = false;
         angleDisplay.SetActive(true);
+
         this.touchStart = touchStart;
         this.facingDirection = facingDirection;
+        this.minDragDistance = minDragDistance;
+        this.angleLimit = angleLimit;
+            
         float angle = 0f;
         switch (facingDirection) {
             case Direction.LEFT:

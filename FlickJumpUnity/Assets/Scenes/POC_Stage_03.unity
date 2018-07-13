@@ -344,6 +344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpSpeed: 20
   jumpAngleLimit: 5
+  useAngleDisplay: 1
   initialVelocity: {x: 0, y: 0}
   initialState: 0
   initialDirection: 2
@@ -359,8 +360,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f87606c9a00d3474fb1de8145f8c0d27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AngleDisplay: {fileID: 175983761}
-  ArrowPivot: {fileID: 1908514278}
+  angleDisplay: {fileID: 175983761}
+  arrowPivot: {fileID: 1908514278}
 --- !u!1001 &1268648906
 Prefab:
   m_ObjectHideFlags: 0
