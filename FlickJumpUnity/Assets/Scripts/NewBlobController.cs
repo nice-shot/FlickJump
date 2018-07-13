@@ -46,6 +46,7 @@ public class NewBlobController : MonoBehaviour {
 
     public void Restart() {
         gameOverScreen.SetActive(false);
+        angleDisplay.Hide();
         body.position = startingPosition;
         body.velocity = initialVelocity.normalized * jumpSpeed;
         currentState = initialState;
@@ -110,9 +111,11 @@ public class NewBlobController : MonoBehaviour {
             touchEnd = touchStart;
             // Set animation preparing
             animator.SetBool(animPreparing, true);
+            angleDisplay.Show(touchStart, currentDirection, jumpAngleLimit);
         }
 
         if (Input.GetMouseButtonUp(0)) {
+            angleDisplay.Hide();
             animator.SetBool(animPreparing, false);
             touchEnd = (Vector2)Input.mousePosition;
             Vector2 swipe = touchEnd - touchStart;
@@ -164,11 +167,6 @@ public class NewBlobController : MonoBehaviour {
         angleDisplay.Hide();
     }
 
-    // Called via the animation so it'll only displayed when on the wall
-    public void ShowAngleDisplay() {
-        angleDisplay.Show(touchStart, currentDirection, jumpAngleLimit); 
-    }
-
     void OnCollisionEnter2D(Collision2D collision) {
         // Stop movement and jumping animation
         body.velocity = Vector2.zero;
@@ -206,5 +204,12 @@ public class NewBlobController : MonoBehaviour {
         }
 
         ChangeSpriteDirection();
+    }
+
+    // Called via the animation so it'll only displayed when preparing
+    public void ShowAngleDisplay() {
+        if (angleDisplay.IsHidden()) {
+            angleDisplay.Show(touchStart, currentDirection, jumpAngleLimit); 
+        }
     }
 }
