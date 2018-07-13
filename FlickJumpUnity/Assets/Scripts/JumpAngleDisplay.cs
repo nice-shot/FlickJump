@@ -35,11 +35,11 @@ public class JumpAngleDisplay : MonoBehaviour {
             arrowPivot.transform.localScale = new Vector3(1f, ySize);
 
             // Change arrow color if angle is illegal
-            if (!NewBlobController.CheckJumpAngle(facingDirection, swipe,
+            if (BlobController.CheckJumpAngle(facingDirection, swipe,
                                                  angleLimit)) {
-                arrowSprite.color = Color.red;
-            } else {
                 arrowSprite.color = Color.white;
+            } else {
+                arrowSprite.color = Color.red;
             }
         }
 	}
