@@ -13,6 +13,7 @@ public class BlobController : MonoBehaviour {
 
     // States
     private bool facingUp;
+    private int jumpsNum;
     private Vector3 startingPosition;
     private Direction currentDirection;
     private BlobState currentState;
@@ -53,6 +54,7 @@ public class BlobController : MonoBehaviour {
         body.position = startingPosition;
         body.velocity = initialVelocity.normalized * jumpSpeed;
 
+        jumpsNum = 0;
         facingUp = true;
         currentState = initialState;
         currentDirection = initialDirection;
@@ -154,6 +156,7 @@ public class BlobController : MonoBehaviour {
         animator.SetBool(animJumping, true);
         ChangeSpriteDirection();
         angleDisplay.Hide();
+        jumpsNum++;
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
@@ -236,5 +239,9 @@ public class BlobController : MonoBehaviour {
         }
 
         return facingUp;
+    }
+
+    public int GetNumOfJumps() {
+        return jumpsNum;
     }
 }
