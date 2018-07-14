@@ -22,6 +22,7 @@ TextureImporter:
     21300034: HorizontalWall
     21300036: HorizontalWallEdge_L
     21300038: HorizontalWallEdge_R
+    21300040: SpikeWall
   externalObjects: {}
   serializedVersion: 5
   mipmaps:
@@ -332,13 +333,33 @@ TextureImporter:
         width: 10
         height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
       spriteID: 85a72bfd5d3b6dc48b0911d8a23439de
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpikeWall
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 2
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94c719f2c31de463cbb79bf0f6897f64
       vertices: []
       indices: 
       edges: []
