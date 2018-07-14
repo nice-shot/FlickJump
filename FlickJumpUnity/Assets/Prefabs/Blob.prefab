@@ -249,7 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 592b5c31d41244050a4122f0c73860d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpSpeed: 25
+  jumpSpeed: 27
   jumpAngleLimit: 5
   useAngleDisplay: 1
   initialVelocity: {x: 0, y: 0}

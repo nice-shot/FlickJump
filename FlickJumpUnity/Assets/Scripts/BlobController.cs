@@ -148,6 +148,7 @@ public class BlobController : MonoBehaviour {
         }
 
         // Jumping:
+        Debug.Log("Jumping to: " + jumpVector);
         body.velocity = jumpVector.normalized * jumpSpeed;
         currentState = BlobState.JUMPING;
         animator.SetBool(animJumping, true);
