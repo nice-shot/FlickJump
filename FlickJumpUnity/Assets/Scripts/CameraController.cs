@@ -8,6 +8,7 @@ public class CameraController : MonoBehaviour {
     [Tooltip("Maximum allowed distance between jumper and camera center")]
     public float distanceFromCam;
     public float moveSpeed;
+    public float minY;
 
     // These values don't change and are used for quick access
     private float posX;
@@ -28,6 +29,8 @@ public class CameraController : MonoBehaviour {
             // Prevent too big movements when jumping down
             desiredCameraY = jumperY - (distanceFromCam / 2);
         }
+
+        desiredCameraY = Mathf.Max(desiredCameraY, minY);
 
         Vector3 targetPos = new Vector3(posX, desiredCameraY, posZ);
         transform.position = Vector3.Lerp(transform.position, targetPos, moveSpeed);
